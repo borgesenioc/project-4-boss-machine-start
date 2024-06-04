@@ -4,10 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "cross-env PORT=8000 mocha --watch",
-    "start-dev": "webpack -w & nodemon --watch server.js --watch server/",
-    "start": "nodemon --watch server.js --watch server/",
-    "postinstall": "webpack"
+    "build": "webpack"
   },
   "author": "Codecademy",
   "license": "ISC",
@@ -42,8 +39,5 @@
     "redux-thunk": "^3.1.0",
     "webpack": "^5.91.0",
     "webpack-cli": "^5.1.4"
-  },
-  "scripts": {
-    "build": "webpack"
   }
 }
