@@ -73,8 +73,31 @@ apiRouter.get('/ideas', (req, res, next) => {
     res.send(allIdeas)
 });
 //POST /api/ideas to create a new idea and save it to the database.
+apiRouter.post('/ideas', (req, res, next) => {
+    const newIdea = req.body;
+    const addedIdea = addToDatabase('ideas', newIdea);
+
+    if (addIdeaToDatabase) {
+        res.status(201).send(addedIdea);
+
+    } else {
+        res.status(400).send();
+    }
+
+});
 //GET /api/ideas/:ideaId to get a single idea by id.
+apiRouter.get('/ideas/:ideaId', (req, res, next) => {
+    const ideaId = req.params.ideaId;
+    const fetchedIdea = getFromDatabaseById('ideas', ideaId);
+
+    if (fetchedIdea) {
+        res.status(200).send(fetchedIdea);
+    } else {
+        res.status(404).send();
+    }
+});
 //PUT /api/ideas/:ideaId to update a single idea by id.
+
 //DELETE /api/ideas/:ideaId to delete a single idea by id.
 
 module.exports = apiRouter;
