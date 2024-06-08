@@ -97,7 +97,28 @@ apiRouter.get('/ideas/:ideaId', (req, res, next) => {
     }
 });
 //PUT /api/ideas/:ideaId to update a single idea by id.
+apiRouter.put('/ideas/:ideaId', (req, res, next) => {
+    const ideaId = req.params.ideaId;
+    const newIdea = { ...req.body, id: ideaId };
+    const updatedIdea = updateInstanceInDatabase('ideas', newIdea);
+
+    if (updatedIdea) {
+        res.status(200).send(updatedIdea);
+    } else {
+        res.status(404).send();
+    }
+});
 
 //DELETE /api/ideas/:ideaId to delete a single idea by id.
+apiRouter.delete('/ideas/:ideaId', (req, res, next) => {
+    const ideaId = req.params.ideaId;
+    const ideaDeleted = deleteFromDatabasebyId('ideas', ideaId);
+
+    if (ideaDeleted) {
+        res.status(204).send();
+    } else {
+        res.status(404).send();
+    }
+});
 
 module.exports = apiRouter;
