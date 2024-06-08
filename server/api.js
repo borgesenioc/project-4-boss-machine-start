@@ -1,6 +1,6 @@
 const express = require('express');
 const apiRouter = express.Router();
-const { getAllFromDatabase, addToDatabase, getFromDatabaseById, updateInstanceInDatabase, deleteFromDatabasebyId
+const { getAllFromDatabase, addToDatabase, getFromDatabaseById, updateInstanceInDatabase, deleteFromDatabasebyId, deleteAllFromDatabase
 } = require('./db.js');
 
 //GET /api/minions to get an array of all minions.
@@ -118,6 +118,33 @@ apiRouter.delete('/ideas/:ideaId', (req, res, next) => {
         res.status(204).send();
     } else {
         res.status(404).send();
+    }
+});
+
+//GET /api/meetings to get an array of all meetings.
+apiRouter.get('/meetings', (req, res, next) => {
+    const allMeetings = getAllFromDatabase('meetings');
+    res.status(200).send(allMeetings);
+});
+//POST /api/meetings to create a new meeting and save it to the database.
+apiRouter.post('/meetings', (req, res, next) => {
+    const newMeeting = req.body;
+    const addedMeeting = addToDatabase('meetings', newMeeting);
+
+    if (addedMeeting) {
+        res.status(201).send(addedMeeting);
+    } else {
+        res.status(400).send();
+    }
+});
+//DELETE /api/meetings to delete all meetings from the database.
+apiRouter.delete('/meetings', (req, res, next) => {
+    const deleteMeetings = deleteAllFromDatabase('meetings');
+
+    if (deleteMeetings) {
+        res.status(204).send();
+    } else {
+        res.status(500).send();
     }
 });
 
